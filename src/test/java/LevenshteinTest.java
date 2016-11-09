@@ -9,5 +9,4 @@ public class LevenshteinTest {
         Levenshtein levenshtein = new Levenshtein("logarytmique", "algorithmique");
         assertThat(levenshtein.getDistance(), equalTo(5));
     }
-
 }
