@@ -1,5 +1,3 @@
-import static java.lang.Math.abs;
-
 public class Levenshtein {
 
     private String mot1;
@@ -19,6 +17,11 @@ public class Levenshtein {
         mot2 = tmp;
     }
 
+    private void reduceWords(){
+        mot1 = mot1.substring(0, mot1.length() - 1);
+        mot2 = mot2.substring(0, mot2.length() - 1);
+    }
+
     public int getDistance(){
         if(mot1.length() > mot2.length())
             swap();
@@ -29,23 +32,17 @@ public class Levenshtein {
         char lastChar2 = mot2.charAt(mot2.length()-1);
 
         if (lastChar1 == lastChar2) {
-            mot1 = mot1.substring(0, mot1.length() - 1);
-            mot2 = mot2.substring(0, mot2.length() - 1);
+            reduceWords();
             getDistance();
         }
         else {
-            System.out.println(mot1 + " != " + mot2);
-            if (mot1.length() < mot2.length() && mot1.indexOf(lastChar2) == -1) {
+            if (mot1.length() < mot2.length() && mot1.indexOf(lastChar2) == -1)
                 mot1 += lastChar2;
-                System.out.println(mot1);
-            }
             else
                 mot1 = mot1.replace(lastChar1, lastChar2);
             ++distance;
-            System.out.println(distance);
             getDistance();
         }
         return distance;
     }
-
 }
