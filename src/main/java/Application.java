@@ -1,29 +1,37 @@
-import java.io.*;
-import java.net.URISyntaxException;
+import Utils.MapUtils;
 
+import java.io.*;
+import java.util.*;
 
 public class Application {
 
-    public static void main(String[] args) throws IOException, URISyntaxException {
-        /*long initTime = System.nanoTime();
-        Levenshtein levenshtein = new Levenshtein("choufleur", "chouxfleur");
-        System.out.println(levenshtein.getDistance());
+    public static void main(String[] args) throws IOException {
+
+        Dico.Dictionary dictionary = new Dico.Dictionary();
+
+        dictionary.init();
+
+        long initTime = System.nanoTime();
+
+        Map<String, Integer> mapOccurences = dictionary.getMapOccurences();
+
+        int maxValue = MapUtils.getMaxValueFromMap(mapOccurences);
+
+        System.out.println(mapOccurences);
+        HashMap<String, Integer> map = MapUtils.getMaxValueOccurences(mapOccurences, maxValue);
+
+        List<String> bestSuggestions = dictionary.getBestSuggestions(map);
+
         long endTime = System.nanoTime();
-        System.out.println("Temps algo : " + (endTime - initTime) + " nanosecondes.");*/
+        String unknownWord = ". \nJe ne connais pas ce mot, ni aucun mot qui s'en rapproche";
+        String knownWord = ". \nVouliez vous plutot dire : " + bestSuggestions + " ?";
 
-        /*CuckooTable cuckooTable = new CuckooTable(10);
-        Trigram t = new Trigram();
-        cuckooTable = t.addTrigram(cuckooTable, "choufleur");
-        System.out.println(cuckooTable);
-        cuckooTable = t.addTrigram(cuckooTable, "chouxlfeur");
-        System.out.println(cuckooTable);*/
+        String printedStr = unknownWord;
+        if(!bestSuggestions.isEmpty())
+            printedStr = knownWord;
 
-        /*
-        ClassLoader cl = Thread.currentThread().getContextClassLoader();
-        InputStream is = cl.getResourceAsStream("minidico.txt");
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(is));
-        String string;
-        while((string = bufferedReader.readLine()) != null)
-            System.out.println(string);*/
+
+        System.out.println("Vous avez saisi : " + dictionary.getWord() + printedStr);
+        System.out.println("Traitement effectué en : " + (endTime - initTime) + " nanosecondes.");
     }
 }

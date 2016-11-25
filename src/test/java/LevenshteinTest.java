@@ -1,6 +1,7 @@
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+import Dico.Levenshtein;
 import org.junit.Test;
 
 public class LevenshteinTest {
